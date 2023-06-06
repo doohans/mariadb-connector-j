@@ -342,8 +342,8 @@ public class SslTest extends Common {
     assertThrows(
         SQLInvalidAuthorizationSpecException.class,
         () ->
-            createCon(
-                baseMutualOptions + "&sslMode=VERIFY_CA&serverSslCert=" + serverCertPath, sslPort));
+            createBasicCon(
+                baseOptions + "&sslMode=VERIFY_CA&serverSslCert=" + serverCertPath, sslPort));
   }
 
   private String getServerCertificate(String serverCertPath) throws SQLException {
