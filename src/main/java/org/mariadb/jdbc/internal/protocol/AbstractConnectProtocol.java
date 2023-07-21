@@ -596,7 +596,7 @@ public abstract class AbstractConnectProtocol implements Protocol {
       destroySocket();
       throw sqlException;
     } finally {
-      setConnectionSoTimeout(orgConnectionSoTimeout);	
+      setConnectionSoTimeout(orgConnectionSoTimeout);
     }
 
     connected = true;
@@ -623,24 +623,24 @@ public abstract class AbstractConnectProtocol implements Protocol {
   }
 
   private int getOrgConnectionSoTimeout() {
-	  int orgSoTimeout = 0;
-	  try {
-		  orgSoTimeout = this.socket.getSoTimeout();
-	  }catch(SocketException e) {
-		// eat exception
-	  }
-	  
-	  return orgSoTimeout;
+    int orgSoTimeout = 0;
+    try {
+      orgSoTimeout = this.socket.getSoTimeout();
+    } catch (SocketException e) {
+      // eat exception
+    }
+
+    return orgSoTimeout;
   }
-  
+
   private void setConnectionSoTimeout(int timeout) {
-	  try {
-		this.socket.setSoTimeout(timeout);
-	} catch (SocketException e) {
-		// eat exception
-	}
+    try {
+      this.socket.setSoTimeout(timeout);
+    } catch (SocketException e) {
+      // eat exception
+    }
   }
-  
+
   /** Closing socket in case of Connection error after socket creation. */
   public void destroySocket() {
     if (this.reader != null) {

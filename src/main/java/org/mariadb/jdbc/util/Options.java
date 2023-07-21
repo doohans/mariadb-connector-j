@@ -52,7 +52,7 @@ public class Options implements Cloneable {
   public String socketFactory;
   public int connectTimeout =
       DriverManager.getLoginTimeout() > 0 ? DriverManager.getLoginTimeout() * 1000 : 30_000;
-  public int connectWaitTimeout;      
+  public int connectWaitTimeout = 3000;
   public String pipe;
   public String localSocket;
   public String sharedMemory;
@@ -374,8 +374,8 @@ public class Options implements Cloneable {
       return false;
     }
     if (connectWaitTimeout != opt.connectWaitTimeout) {
-        return false;
-    }    
+      return false;
+    }
     if (!Objects.equals(pipe, opt.pipe)) {
       return false;
     }

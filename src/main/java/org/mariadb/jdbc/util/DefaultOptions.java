@@ -698,8 +698,7 @@ public enum DefaultOptions {
       0,
       "2.7.10",
       "The initial connect wait timeout value, in milliseconds, or zero for no timeout.",
-      false),  
-  ;
+      false);
   private final String optionName;
   private final String description;
   private final boolean required;
