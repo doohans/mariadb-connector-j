@@ -691,7 +691,15 @@ public enum DefaultOptions {
       Boolean.FALSE,
       "2.7.0",
       "ensure socket state before issuing a new command",
-      false);
+      false),
+  CONNECT_WAIT_TIMEOUT(
+      "connectWaitTimeout",
+      3_000,
+      0,
+      "2.7.10",
+      "The initial connect wait timeout value, in milliseconds, or zero for no timeout.",
+      false),  
+  ;
   private final String optionName;
   private final String description;
   private final boolean required;

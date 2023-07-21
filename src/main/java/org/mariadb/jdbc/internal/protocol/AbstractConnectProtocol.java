@@ -534,8 +534,10 @@ public abstract class AbstractConnectProtocol implements Protocol {
     this.socket = createSocket(host, port, options);
     assignStream(this.socket, options);
 
+    int orgConnectionSoTimeout = getOrgConnectionSoTimeout();
     try {
 
+      setConnectionSoTimeout(options.connectWaitTimeout);
       // parse server greeting packet.
       final ReadInitialHandShakePacket greetingPacket = new ReadInitialHandShakePacket(reader);
       this.serverThreadId = greetingPacket.getServerThreadId();
@@ -593,6 +595,8 @@ public abstract class AbstractConnectProtocol implements Protocol {
     } catch (SQLException sqlException) {
       destroySocket();
       throw sqlException;
+    } finally {
+      setConnectionSoTimeout(orgConnectionSoTimeout);	
     }
 
     connected = true;
@@ -618,6 +622,25 @@ public abstract class AbstractConnectProtocol implements Protocol {
     hostFailed = false;
   }
 
+  private int getOrgConnectionSoTimeout() {
+	  int orgSoTimeout = 0;
+	  try {
+		  orgSoTimeout = this.socket.getSoTimeout();
+	  }catch(SocketException e) {
+		// eat exception
+	  }
+	  
+	  return orgSoTimeout;
+  }
+  
+  private void setConnectionSoTimeout(int timeout) {
+	  try {
+		this.socket.setSoTimeout(timeout);
+	} catch (SocketException e) {
+		// eat exception
+	}
+  }
+  
   /** Closing socket in case of Connection error after socket creation. */
   public void destroySocket() {
     if (this.reader != null) {
